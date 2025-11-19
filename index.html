@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Love Story</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation -->
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-brand">❤️ BERDUA</div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+</nav>
+
+  <!-- Home Section -->
+  <section id="home" class="section hero">
+    <div class="hero-content">
+      <h1 class="fade-in">Kisah Kita</h1>
+      <p class="fade-in delay-1">Setiap disampingmu adalah kebahagiaan yang tak terlupakan 🌸</p>
+      <button class="btn-primary fade-in delay-2" onclick="scrollToGallery()">Lihat Kenangan</button>
+      <audio id="clickSound" src="asset/music/akuuuu.mp3" preload="auto"></audio>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section about">
+    <div class="container">
+      <h2 class="section-title">Tentang Kita</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>
+            Kami bertemu pertama kali di tahun <strong>2025</strong>,rasanya sangat senang ketika kita bertemu
+          </p>
+          <p>
+            dengan penuh excited diantara aku dan dia ketika bertemu.
+          </p>
+          <p>
+            yaa walaupun kadang ntah aku atau dia kadang ngeselin, tapi gimana ketika bertemu selalu merasakan yang namanya kenyamanan 
+          </p>
+        </div>
+        <div class="about-image">
+          <img src="asset/img/1.jpg" alt="Kita Berdua" class="img-slide-up">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="section gallery">
+    <div class="container">
+      <h2 class="section-title">Galeri Kenangan</h2>
+      <div class="gallery-grid">
+        <!-- Ganti src dengan URL foto kalian -->
+        <div class="gallery-item"><img src="asset/img/2.jpg" alt="Foto 1"></div>
+        <div class="gallery-item"><img src="asset/img/3.jpg" alt="Foto 2"></div>
+        <div class="gallery-item"><img src="asset/img/4.jpg" alt="Foto 3"></div>
+        <div class="gallery-item"><img src="asset/img/5.jpg" alt="Foto 4"></div>
+        <div class="gallery-item"><img src="asset/img/6.jpg" alt="Foto 5"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 • Dibuat oleh perasaan yang syahdu</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/pryfornt?igsh=Mmw2c2x1dTc1eDM=" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@pryfornt?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  // Scroll to Gallery + Play Sound
+  function scrollToGallery() {
+    const audio = document.getElementById('clickSound');
+    audio.play().catch(e => {
+      console.warn("Gagal memutar audio:", e);
+    });
+    document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ✅ Toggle Hamburger Menu (Dropdown) — LETAKKAN DI LUAR SEMUA CALLBACK!
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    // Tutup menu saat klik di luar
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      }
+    });
+
+    // Tutup saat klik link (mobile)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+  }
+
+  // Simple image zoom on click (lightbox effect)
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', () => {
+      const overlay = document.createElement('div');
+      overlay.className = 'lightbox';
+      overlay.innerHTML = `
+        <span class="close">&times;</span>
+        <img src="${img.src}" alt="${img.alt}">
+      `;
+      document.body.appendChild(overlay);
+
+      overlay.querySelector('.close').onclick = () => document.body.removeChild(overlay);
+      overlay.onclick = (e) => {
+        if (e.target === overlay) overlay.remove();
+      };
+    });
+  });
+
+</script>
+</body>
+</html>
